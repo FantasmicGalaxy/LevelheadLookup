@@ -1,19 +1,32 @@
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400&display=swap');
 
 html {
 	background-color: #0d1b2b;
 	color: #c4c4c4;
-	font-family: 'Fira Sans Extra Condensed', sans-serif;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
+	font-size: 18px;
+
+	background: linear-gradient(rgb(46, 46, 46, 0.2), rgb(38, 38, 38, 0.2)), url(bg.png);
 }
 
 div#app {
 	display: flex;
 }
 
-.flex-grow {
+.profile {
+	flex-grow: 1;
+	flex: 3;
+}
+
+.levels {
+	flex-grow: 1;
+	flex: 4;
+}
+
+/* .flex-grow {
 	flex-grow: 1;
 	flex: 1;
-}
+} */
 
 .header {
 	display: flex;
@@ -74,11 +87,12 @@ h2 {
 .main-stats {
 	display: flex;
 	color: #11a6eb;
+	font-size: 22px;
 }
 
 .general-stats {
 	flex-grow: 1;
-	margin: 1em;
+	margin-right: 0.5em;
 }
 
 .highlight {
@@ -87,7 +101,7 @@ h2 {
 
 .reward-stats {
 	flex-grow: 1;
-	margin: 1em;
+	margin-left: 0.5em;
 }
 
 .all-stats {
