@@ -40,7 +40,7 @@ async function getUserStats(userId) {
 	return await userStats;
 }
 
-async function getUserInfo(userId) {
+async function updateUserInfo(userId) {
 	let userData, userStats;
 	try {
 		userData = await getUserData(userId);
@@ -74,4 +74,4 @@ async function getUserInfo(userId) {
 	app.userInfo = userInfo;
 }
 
-getUserInfo(id);
+updateUserInfo(id);
