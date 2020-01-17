@@ -4,61 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <link rel="stylesheet" href="main.css">
-
     <title>LevelheadLookup</title>
 </head>
 <body>
 
     <div id="app">
-        <div class="flex-grow profile">
-            <div class="header">
-                <div class="follow-count">
-                    <h2>Followers</h2>
-                    <p>{{ userInfo.followers }}</p>
-                </div>
-    
-                <img src="defaultavatar.png" alt="Default Avatar" class="avatar-icon">
-            </div>
-
-            <h2 class="alias">{{ userInfo.alias }} <span class="player-id">@{{ userInfo.id  }}</span></h2>
-
-            <div class="stats">
-                <div class="main-stats">
-                    <div class="general-stats">
-                        <h3>Following:<span style="float: right;">{{ userInfo.following }}</span></h3>
-                        <h3 class="highlight">Levels Shipped:<span style="float: right;">{{ userInfo.shipped }}</span></h3>
-                        <h3>Levels Played:<span style="float: right;">{{ userInfo.played }}</span></h3>
-                    </div>
-                    <div class="reward-stats">
-                        <h3>Shoes:<span style="float: right;">{{ userInfo.shoes }}</span></h3>
-                        <h3>Ribbons:<span style="float: right;">{{ userInfo.ribbons }}</span></h3>
-                    </div>
-                </div>
-
-                <div class="all-stats">
-                    <h3>Training Progress:<span style="float: right;">{{ userInfo.training }}%</span></h3>
-                    <h3>Plays Generated:<span style="float: right;">{{ userInfo.playsGen }}</span></h3>
-                    <h3>Playtime Generated:<span style="float: right;">{{ userInfo.playtimeGen }}</span></h3>
-                    <h3>Daily Builds Completed:<span style="float: right;">{{ userInfo.builds }}</span></h3>
-                    <h3>Wins:<span style="float: right;">{{ userInfo.wins }}</span></h3>
-                    <h3>Fails:<span style="float: right;">{{ userInfo.fails }}</span></h3>
-                    <h3>Tower Trials Completed:<span style="float: right;">{{ userInfo.trials }}</span></h3>
-                    <h3>Time Trophies:<span style="float: right;">{{ userInfo.trophies }}</span></h3>
-                    <h3>Exposure Bucks Tipped:<span style="float: right;">{{ userInfo.tipped }}</span></h3>
-                    <h3>Tips Earned:<span style="float: right;">{{ userInfo.earned }}</span></h3>
-                </div>
-            </div>
-        </div>
-        <div class="flex-grow levels">
-            <p>Placeholder</p>
-        </div>
+        <img :src="info.avatarUrl.data" alt="Avatar">
+        <h2>{{ info.alias.data }}@{{ info.id.data  }}</h2>
+        <h3 v-for="item in info"> {{ item.label }}: {{ item.data }} </h3>
     </div>
-
-    <img src="reference.png" alt="Reference Photo" style="width: 100%; height: auto;">
-    <img src="playercards.png" alt="Reference Photo" style="width: 600px; height: auto;">
-    <img src="openlevelcard.png" alt="Reference Photo" style="width: 600px; height: auto;">
 
     <script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
     <script src="https://unpkg.com/vue"></script>
