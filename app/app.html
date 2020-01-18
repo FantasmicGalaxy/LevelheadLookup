@@ -13,7 +13,7 @@
         <button v-on:click="updateInfo">Submit</button>
 
         <img :src="info.avatarUrl.data" alt="Avatar">
-        <h3 v-for="item in info"> {{ item.label }}: {{ formatText(item.data, item.format) }} </h3>
+        <p v-for="item in info"> {{ item.label }}: {{ formatText(item.data, item.format) }} </p>
     </div>
 
     <script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
