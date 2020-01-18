@@ -10,7 +10,6 @@
 
     <div id="app">
         <img :src="info.avatarUrl.data" alt="Avatar">
-        <h2>{{ info.alias.data }}@{{ info.id.data  }}</h2>
         <h3 v-for="item in info"> {{ item.label }}: {{ item.data }} </h3>
     </div>
 
