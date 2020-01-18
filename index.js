@@ -60,7 +60,6 @@ async function getUserData(userId) {
 	try {
 		let aliasData = await rce.levelhead.aliases.search(userId, {}, { doNotUseKey: true });
 		let playerData = await rce.levelhead.players.search({ userIds: userId }, { doNotUseKey: true });
-
 		if (aliasData.length != 1 || playerData.length != 1) {
 			throw new Error('Request from server had too many responses!');
 		}
@@ -91,7 +90,7 @@ async function updateUserInfo(userId) {
 			},
 			avatarUrl: {
 				label: 'Avatar URL',
-				data: `https://img.bscotch.net/fit-in/128x128/avatars/${rawData.avatarId}.png`
+				data: rawData.avatarUrl()
 			},
 			followers: {
 				label: 'Followers',
