@@ -1,5 +1,11 @@
 import * as utils from './utils.js';
 
+// formatting codes:
+// 0: none,
+// 1: formatCommas()
+// 2: formatTime()
+// 3: formatPercent()
+
 const token = '3SAPr11y13BiM7xk';
 const rce = new RumpusCE(token);
 
@@ -10,89 +16,133 @@ let app = new Vue({
 		info: {
 			id: {
 				label: 'ID',
-				data: null
+				data: null,
+				format: 0
 			},
 			alias: {
 				label: 'Alias',
-				data: null
+				data: null,
+				format: 0
 			},
 			avatarId: {
 				label: 'Avatar ID',
-				data: null
+				data: null,
+				format: 0
 			},
 			avatarUrl: {
 				label: 'Avatar URL',
-				data: null
+				data: null,
+				format: 0
 			},
 			followers: {
 				label: 'Followers',
-				data: null
+				data: null,
+				format: 1
 			},
 			following: {
 				label: 'Following',
-				data: null
+				data: null,
+				format: 1
 			},
 			shipped: {
 				label: 'Shipped',
-				data: null
+				data: null,
+				format: 1
 			},
 			played: {
 				label: 'Levels Played',
-				data: null
+				data: null,
+				format: 1
 			},
 			shoes: {
 				label: 'Shoes',
-				data: null
+				data: null,
+				format: 1
 			},
 			ribbons: {
 				label: 'Ribbons',
-				data: null
+				data: null,
+				format: 1
 			},
 			training: {
 				label: 'Training Progress',
-				data: null
+				data: null,
+				format: 3
 			},
 			playsGen: {
 				label: 'Plays Generated',
-				data: null
+				data: null,
+				format: 1
 			},
 			playtimeGen: {
 				label: 'Playtime Generated',
-				data: null
+				data: null,
+				format: 2
 			},
 			builds: {
 				label: 'Daily Builds Completed',
-				data: null
+				data: null,
+				format: 1
 			},
 			wins: {
 				label: 'Wins',
-				data: null
+				data: null,
+				format: 1
 			},
 			fails: {
 				label: 'Fails',
-				data: null
+				data: null,
+				format: 1
 			},
 			trials: {
 				label: 'Tower Trials Completed',
-				data: null
+				data: null,
+				format: 1
 			},
 			trophies: {
 				label: 'Time Trophies',
-				data: null
+				data: null,
+				format: 1
 			},
 			tipped: {
 				label: 'Exposure Bucks Tipped',
-				data: null
+				data: null,
+				format: 1
 			},
 			earned: {
 				label: 'Exposure Bucks Earned',
-				data: null
+				data: null,
+				format: 1
 			}
 		}
 	},
 	methods: {
 		updateInfo: function(event) {
 			updateUserInfo(this.userId);
+		},
+		formatText: function(text, formatCode) {
+			if (typeof text === 'string') {
+				return text;
+			}
+			if (typeof text === 'number') {
+				switch (formatCode) {
+					case 0:
+						return text;
+						break;
+					case 1:
+						return utils.formatCommas(text);
+						break;
+					case 2:
+						return utils.formatTime(text);
+						break;
+					case 3:
+						return utils.formatPercent(text);
+						break;
+					default:
+						return text;
+						break;
+				}
+			}
 		}
 	}
 });
