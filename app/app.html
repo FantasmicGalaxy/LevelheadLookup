@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LevelheadLookup</title>
+</head>
+<body>
+
+    <div id="app">
+        <input v-model="userId" placeholder="enter player id">
+        <button v-on:click="updateInfo">Submit</button>
+
+        <img :src="info.avatarUrl.data" alt="Avatar">
+        <h3 v-for="item in info"> {{ item.label }}: {{ item.data }} </h3>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="app.js" type="module"></script>
+</body>
+</html>
