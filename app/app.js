@@ -7,8 +7,10 @@ import * as utils from './utils.js';
 // 3: formatPercent()
 
 const token = '3SAPr11y13BiM7xk';
+// @ts-ignore
 const rce = new RumpusCE(token);
 
+// @ts-ignore
 let app = new Vue({
 	el: '#app',
 	data: {
@@ -117,6 +119,8 @@ let app = new Vue({
 		}
 	},
 	methods: {
+		// @ts-ignore
+		// @ts-ignore
 		updateInfo(event) {
 			if (typeof this.userId !== 'string' || this.userId.split('').length < 6) {
 				console.error(`ERROR: Invalid User ID!`);
