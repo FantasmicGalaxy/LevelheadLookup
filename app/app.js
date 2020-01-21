@@ -7,10 +7,8 @@ import * as utils from './utils.js';
 // 3: formatPercent()
 
 const token = '3SAPr11y13BiM7xk';
-// @ts-ignore
 const rce = new RumpusCE(token);
 
-// @ts-ignore
 let app = new Vue({
 	el: '#app',
 	data: {
