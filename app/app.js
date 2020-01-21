@@ -118,7 +118,11 @@ let app = new Vue({
 	},
 	methods: {
 		updateInfo: function(event) {
-			updateUserInfo(this.userId);
+			if (typeof this.userId !== 'string' || this.userId.split('').length < 6) {
+				console.error(`ERROR: Invalid User ID!`);
+			} else {
+				updateUserInfo(this.userId);
+			}
 		},
 		formatText: function(text, formatCode) {
 			if (typeof text === 'string') {
