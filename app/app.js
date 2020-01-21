@@ -7,8 +7,10 @@ import * as utils from './utils.js';
 // 3: formatPercent()
 
 const token = '3SAPr11y13BiM7xk';
+// @ts-ignore
 const rce = new RumpusCE(token);
 
+// @ts-ignore
 let app = new Vue({
 	el: '#app',
 	data: {
@@ -117,14 +119,14 @@ let app = new Vue({
 		}
 	},
 	methods: {
-		updateInfo: function(event) {
+		updateInfo(event) {
 			if (typeof this.userId !== 'string' || this.userId.split('').length < 6) {
 				console.error(`ERROR: Invalid User ID!`);
 			} else {
 				updateUserInfo(this.userId);
 			}
 		},
-		formatText: function(text, formatCode) {
+		formatText(text, formatCode) {
 			if (typeof text === 'string') {
 				return text;
 			}
@@ -132,19 +134,14 @@ let app = new Vue({
 				switch (formatCode) {
 					case 0:
 						return text;
-						break;
 					case 1:
 						return utils.formatCommas(text);
-						break;
 					case 2:
 						return utils.formatTime(text);
-						break;
 					case 3:
 						return utils.formatPercent(text);
-						break;
 					default:
 						return text;
-						break;
 				}
 			}
 		}
