@@ -7,6 +7,7 @@ import * as utils from './utils.js';
 // 3: formatPercent()
 
 const token = '3SAPr11y13BiM7xk';
+const limit = 64;
 // @ts-ignore
 const rce = new RumpusCE(token);
 
@@ -15,6 +16,7 @@ let app = new Vue({
 	el: '#app',
 	data: {
 		userId: null,
+		levels: [],
 		info: {
 			id: {
 				label: 'ID',
@@ -119,13 +121,10 @@ let app = new Vue({
 		}
 	},
 	methods: {
-		// @ts-ignore
-		// @ts-ignore
 		updateInfo(event) {
-			if (typeof this.userId !== 'string' || this.userId.split('').length < 6) {
-				console.error(`ERROR: Invalid User ID!`);
-			} else {
+			if (this.userId.length >= 6) {
 				updateUserInfo(this.userId);
+				updateUserLevels(this.userId);
 			}
 		},
 		formatText(text, formatCode) {
@@ -146,6 +145,10 @@ let app = new Vue({
 						return text;
 				}
 			}
+		},
+		getDate(time) {
+			let date = new Date(time);
+			return `${date.getMonth() + 1}/${date.getDay() + 1}/${date.getFullYear()}`;
 		}
 	}
 });
@@ -202,3 +205,19 @@ async function updateUserInfo(userId) {
 		console.error(`ERROR: ${error}`);
 	}
 }
+
+async function updateUserLevels(userId) {
+	let currentLevel = await rce.levelhead.levels.search(
+		{ userIds: userId, limit: limit, sort: 'createdAt' },
+		{ doNotUseKey: true }
+	);
+	let levels = [ ...currentLevel ];
+	while (currentLevel.length === limit) {
+		currentLevel = await currentLevel.nextPage();
+		levels.push(...currentLevel);
+	}
+	app.levels = levels;
+}
+
+updateUserInfo('3719xx');
+updateUserLevels('3719xx');

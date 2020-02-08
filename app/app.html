@@ -6,14 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LevelheadLookup</title>
 </head>
-<body>
-
+<body style="margin: 0px; padding: 0px;">
     <div id="app">
-        <input v-model="userId" placeholder="enter player id">
-        <button v-on:click="updateInfo">Submit</button>
+        <nav>
+            <input v-model="userId" placeholder="enter player id">
+            <button v-on:click="updateInfo">Submit</button>
+        </nav>
 
-        <img :src="info.avatarUrl.data" alt="Avatar">
-        <p v-for="item in info"> {{ item.label }}: {{ formatText(item.data, item.format) }} </p>
+        <main style="display: flex;">
+            <div>
+                <img :src="info.avatarUrl.data" alt="Avatar">
+                <table>
+                    <tr v-for="item in info">
+                        <td>{{ item.label }}:</td>
+                        <td style="text-align: right;">{{ formatText(item.data, item.format) }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <table>
+                    <tr v-for="level in levels">
+                        <td>{{ level.title }}</td>
+                        <td>{{ level.levelId }}</td>
+                        <td>{{ getDate(level.createdAt) }}</td>
+                    </tr>
+                </table>
+            </div>
+        </main>
     </div>
 
     <script src='https://cdn.jsdelivr.net/npm/@bscotch/rumpus-ce@latest'></script>
