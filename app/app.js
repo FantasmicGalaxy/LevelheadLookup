@@ -3,11 +3,14 @@ import * as utils from './utils.js';
 // formatting codes:
 // 0: none,
 // 1: formatCommas()
-// 2: formatTime()
-// 3: formatPercent()
+// 2: formatPercent()
+// 3: formatTime()
+// 4: formatDate()
+
+// TODO: Update the html file to recent changes in the data
 
 const token = '3SAPr11y13BiM7xk';
-const limit = 64;
+const limit = 10;
 // @ts-ignore
 const rce = new RumpusCE(token);
 
@@ -15,209 +18,97 @@ const rce = new RumpusCE(token);
 let app = new Vue({
 	el: '#app',
 	data: {
-		userId: null,
-		levels: [],
-		info: {
-			id: {
-				label: 'ID',
-				data: null,
-				format: 0
-			},
+		playerData: {
 			alias: {
-				label: 'Alias',
-				data: null,
-				format: 0
+				id: '3719xx'
 			},
-			avatarId: {
-				label: 'Avatar ID',
-				data: null,
-				format: 0
-			},
-			avatarUrl: {
-				label: 'Avatar URL',
-				data: null,
-				format: 0
-			},
-			followers: {
-				label: 'Followers',
-				data: null,
-				format: 1
-			},
-			following: {
-				label: 'Following',
-				data: null,
-				format: 1
-			},
-			shipped: {
-				label: 'Shipped',
-				data: null,
-				format: 1
-			},
-			played: {
-				label: 'Levels Played',
-				data: null,
-				format: 1
-			},
-			shoes: {
-				label: 'Shoes',
-				data: null,
-				format: 1
-			},
-			ribbons: {
-				label: 'Ribbons',
-				data: null,
-				format: 1
-			},
-			training: {
-				label: 'Training Progress',
-				data: null,
-				format: 3
-			},
-			playsGen: {
-				label: 'Plays Generated',
-				data: null,
-				format: 1
-			},
-			playtimeGen: {
-				label: 'Playtime Generated',
-				data: null,
-				format: 2
-			},
-			builds: {
-				label: 'Daily Builds Completed',
-				data: null,
-				format: 1
-			},
-			wins: {
-				label: 'Wins',
-				data: null,
-				format: 1
-			},
-			fails: {
-				label: 'Fails',
-				data: null,
-				format: 1
-			},
-			trials: {
-				label: 'Tower Trials Completed',
-				data: null,
-				format: 1
-			},
-			trophies: {
-				label: 'Time Trophies',
-				data: null,
-				format: 1
-			},
-			tipped: {
-				label: 'Exposure Bucks Tipped',
-				data: null,
-				format: 1
-			},
-			earned: {
-				label: 'Exposure Bucks Earned',
-				data: null,
-				format: 1
-			}
+			profile: {},
+			levels: []
+		},
+		formats: {
+			none: 0,
+			comma: 1,
+			percent: 2,
+			time: 3,
+			date: 4
 		}
 	},
 	methods: {
-		updateInfo(event) {
-			if (this.userId.length >= 6) {
-				updateUserInfo(this.userId);
-				updateUserLevels(this.userId);
+		updateData(event) {
+			if (this.playerData.alias.id.length >= 6) {
+				getUserAlias(this.playerData.alias.id);
+				getUserProfile(this.playerData.alias.id);
+				getUserLevels(this.playerData.alias.id);
 			}
 		},
-		formatText(text, formatCode) {
-			if (typeof text === 'string') {
-				return text;
+		format(data, format) {
+			switch (format) {
+				case 0:
+					return data;
+				case 1:
+					return utils.formatCommas(data);
+				case 2:
+					return utils.formatTime(data);
+				case 3:
+					return utils.formatPercent(data);
+				case 4:
+					return utils.formatDate(data);
+				default:
+					return data;
 			}
-			if (typeof text === 'number') {
-				switch (formatCode) {
-					case 0:
-						return text;
-					case 1:
-						return utils.formatCommas(text);
-					case 2:
-						return utils.formatTime(text);
-					case 3:
-						return utils.formatPercent(text);
-					default:
-						return text;
-				}
-			}
-		},
-		getDate(time) {
-			let date = new Date(time);
-			return `${date.getMonth() + 1}/${date.getDay() + 1}/${date.getFullYear()}`;
 		}
 	}
 });
 
-// fetches and returns the data from Rumpus
-async function getUserData(userId) {
-	try {
-		let aliasData = await rce.levelhead.aliases.search(userId, {}, { doNotUseKey: true });
-		let playerData = await rce.levelhead.players.search({ userIds: userId }, { doNotUseKey: true });
-		if (aliasData.length != 1 || playerData.length != 1) {
-			throw new Error('Response from server had more/less than 1 response!');
-		}
+async function getUserAlias(userId) {
+	let aliasData = await rce.levelhead.aliases.search(userId, {}, { doNotUseKey: true });
+	aliasData = aliasData[0];
 
-		let rawData = { ...aliasData[0], ...playerData[0] };
-		return rawData;
-	} catch (err) {
-		console.error(`ERROR: ${err}`);
-	}
+	let alias = {
+		id: await aliasData.userId,
+		alias: aliasData.alias,
+		avatarId: aliasData.avatarId,
+		avatarUrl: aliasData.avatarUrl()
+	};
+	app.playerData.alias = alias;
 }
 
-async function updateUserInfo(userId) {
-	try {
-		let rawData = await getUserData(userId);
+async function getUserProfile(userId) {
+	let profileData = await rce.levelhead.players.search({ userIds: userId }, { doNotUseKey: true });
+	profileData = profileData[0];
 
-		let info = {
-			id: rawData.userId,
-			alias: rawData.alias,
-			avatarId: rawData.avatarId,
-			avatarUrl: rawData.avatarUrl(),
-			followers: rawData.stats.Subscribers,
-			following: rawData.stats.NumFollowing,
-			shipped: rawData.stats.Published,
-			played: rawData.stats.LevelsPlayed,
-			shoes: rawData.stats.Shoes,
-			ribbons: rawData.stats.Crowns,
-			training: rawData.stats.CampaignProg,
-			playsGen: rawData.stats.Plays,
-			playtimeGen: rawData.stats.PlayTime,
-			builds: rawData.stats.DBComp,
-			wins: rawData.stats.Wins,
-			fails: rawData.stats.Fails,
-			trials: rawData.stats.ChalWins,
-			trophies: rawData.stats.TimeTrophies,
-			tipped: rawData.stats.BucksTipped,
-			earned: rawData.stats.TipsGotten
-		};
-
-		for (const key in app.info) {
-			if (app.info.hasOwnProperty(key) && info.hasOwnProperty(key)) {
-				app.info[key].data = info[key];
-			}
-		}
-	} catch (error) {
-		console.error(`ERROR: ${error}`);
-	}
+	let profile = {
+		followers: profileData.stats.Subscribers,
+		following: profileData.stats.NumFollowing,
+		shipped: profileData.stats.Published,
+		played: profileData.stats.LevelsPlayed,
+		shoes: profileData.stats.Shoes,
+		ribbons: profileData.stats.Crowns,
+		training: profileData.stats.CampaignProg,
+		playsGen: profileData.stats.Plays,
+		playtimeGen: profileData.stats.PlayTime,
+		builds: profileData.stats.DBComp,
+		wins: profileData.stats.Wins,
+		fails: profileData.stats.Fails,
+		trials: profileData.stats.ChalWins,
+		trophies: profileData.stats.TimeTrophies,
+		tipped: profileData.stats.BucksTipped,
+		earned: profileData.stats.TipsGotten
+	};
+	app.playerData.profile = profile;
 }
 
-async function updateUserLevels(userId) {
-	let currentLevel = await rce.levelhead.levels.search(
+async function getUserLevels(userId) {
+	let levels = [];
+	let levelData = await rce.levelhead.levels.search(
 		{ userIds: userId, limit: limit, sort: 'createdAt' },
 		{ doNotUseKey: true }
 	);
-	let levels = [ ...currentLevel ];
-	while (currentLevel.length === limit) {
-		currentLevel = await currentLevel.nextPage();
-		levels.push(...currentLevel);
+	levels = [ ...levelData ];
+	while (levelData.length === limit) {
+		levelData = await levelData.nextPage();
+		levels.push(...levelData);
 	}
-	app.levels = levels;
-}
 
-updateUserInfo('3719xx');
-updateUserLevels('3719xx');
+	app.playerData.levels = levels;
+}

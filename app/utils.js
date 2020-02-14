@@ -3,8 +3,12 @@ export function formatCommas(number) {
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	return parts.join('.');
 }
+export function formatPercent(number) {
+	return `${number}%`;
+}
 
-export function formatTime(seconds) {
+export function formatTime(number) {
+	let seconds = number;
 	let minutes = Math.floor(seconds / 60);
 	let hours = Math.floor(minutes / 60);
 	let days = Math.floor(hours / 24);
@@ -18,6 +22,7 @@ export function formatTime(seconds) {
 	}
 }
 
-export function formatPercent(number) {
-	return `${number}%`;
+export function formatDate(time) {
+	let date = new Date(time);
+	return `${date.getMonth() + 1}/${date.getDay() + 1}/${date.getFullYear()}`;
 }

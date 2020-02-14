@@ -9,27 +9,29 @@
 <body style="margin: 0px; padding: 0px;">
     <div id="app">
         <nav>
-            <input v-model="userId" placeholder="enter player id">
-            <button v-on:click="updateInfo">Submit</button>
+            <input v-model="playerData.alias.id" placeholder="enter player id">
+            <button @click="updateData">Submit</button>
         </nav>
 
         <main style="display: flex;">
             <div>
-                <img :src="info.avatarUrl.data" alt="Avatar">
+                <img :src="playerData.alias.avatarUrl" alt="Avatar">
                 <table>
-                    <tr v-for="item in info">
-                        <td>{{ item.label }}:</td>
-                        <td style="text-align: right;">{{ formatText(item.data, item.format) }}</td>
+                    <tr v-for="item in playerData">
+                        <td>{{ item }}:</td>
+                        <td style="text-align: right;">{{ item }}</td>
                     </tr>
                 </table>
             </div>
 
+            <h1></h1>
+
             <div>
                 <table>
-                    <tr v-for="level in levels">
+                    <tr v-for="level in playerData.levels">
                         <td>{{ level.title }}</td>
                         <td>{{ level.levelId }}</td>
-                        <td>{{ getDate(level.createdAt) }}</td>
+                        <td>{{ level.createdAt }}</td>
                     </tr>
                 </table>
             </div>
