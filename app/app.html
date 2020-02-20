@@ -17,10 +17,25 @@
             <div>
                 <img :src="playerData.alias.avatarUrl" alt="Avatar">
                 <table>
-                    <tr v-for="item in playerData">
-                        <td>{{ item }}:</td>
-                        <td style="text-align: right;">{{ item }}</td>
+                    <tr v-for="item in playerData.profile">
+                        <td>{{ item }}</td>
                     </tr>
+                    <!-- <td>Followers: {{ playerData.profile.followers }}</td>
+                    <td>following: {{ playerData.profile.following }}</td>
+                    <td>shipped: {{ playerData.profile.shipped }}</td>
+                    <td>played: {{ playerData.profile.played }}</td>
+                    <td>shoes: {{ playerData.profile.shoes }}</td>
+                    <td>ribbons: {{ playerData.profile.ribbons }}</td>
+                    <td>training: {{ playerData.profile.training }}</td>
+                    <td>playsGen: {{ playerData.profile.playsGen }}</td>
+                    <td>playtimeGen: {{ playerData.profile.playtimeGen }}</td>
+                    <td>builds: {{ playerData.profile.builds }}</td>
+                    <td>wins: {{ playerData.profile.wins }}</td>
+                    <td>fails: {{ playerData.profile.fails }}</td>
+                    <td>trials: {{ playerData.profile.trials }}</td>
+                    <td>trophies: {{ playerData.profile.trophies }}</td>
+                    <td>tipped: {{ playerData.profile.tipped }}</td>
+                    <td>earned: {{ playerData.profile.earned }}</td> -->
                 </table>
             </div>
 
