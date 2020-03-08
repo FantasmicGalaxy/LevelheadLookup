@@ -5,22 +5,70 @@
         <img :src="playerData.alias.avatarUrl" alt="Avatar" />
         <h1>{{ playerData.alias.alias }}@{{ playerData.alias.id }}</h1>
         <table>
-          <tr><td>Followers:</td><td>{{ playerData.profile.followers }}</td></tr>
-          <tr><td>Following:</td><td>{{ playerData.profile.following }}</td></tr>
-          <tr><td>Shipped:</td><td>{{ playerData.profile.shipped }}</td></tr>
-          <tr><td>Played:</td><td>{{ playerData.profile.played }}</td></tr>
-          <tr><td>Shoes:</td><td>{{ playerData.profile.shoes }}</td></tr>
-          <tr><td>Ribbons:</td><td>{{ playerData.profile.ribbons }}</td></tr>
-          <tr><td>Training:</td><td>{{ playerData.profile.training }}</td></tr>
-          <tr><td>Plays Generated:</td><td>{{ playerData.profile.playsGen }}</td></tr>
-          <tr><td>Playtime Generated:</td><td>{{ playerData.profile.playtimeGen }}</td></tr>
-          <tr><td>Daily Builds Completed:</td><td>{{ playerData.profile.builds }}</td></tr>
-          <tr><td>Wins:</td><td>{{ playerData.profile.wins }}</td></tr>
-          <tr><td>Fails:</td><td>{{ playerData.profile.fails }}</td></tr>
-          <tr><td>Tower Trials Completed:</td><td>{{ playerData.profile.trials }}</td></tr>
-          <tr><td>Trophies:</td><td>{{ playerData.profile.trophies }}</td></tr>
-          <tr><td>Tipped:</td><td>{{ playerData.profile.tipped }}</td></tr>
-          <tr><td>Earned:</td><td>{{ playerData.profile.earned }}</td></tr>
+          <tr>
+            <td>Followers:</td>
+            <td>{{ playerData.profile.followers }}</td>
+          </tr>
+          <tr>
+            <td>Following:</td>
+            <td>{{ playerData.profile.following }}</td>
+          </tr>
+          <tr>
+            <td>Shipped:</td>
+            <td>{{ playerData.profile.shipped }}</td>
+          </tr>
+          <tr>
+            <td>Played:</td>
+            <td>{{ playerData.profile.played }}</td>
+          </tr>
+          <tr>
+            <td>Shoes:</td>
+            <td>{{ playerData.profile.shoes }}</td>
+          </tr>
+          <tr>
+            <td>Ribbons:</td>
+            <td>{{ playerData.profile.ribbons }}</td>
+          </tr>
+          <tr>
+            <td>Training:</td>
+            <td>{{ playerData.profile.training }}</td>
+          </tr>
+          <tr>
+            <td>Plays Generated:</td>
+            <td>{{ playerData.profile.playsGen }}</td>
+          </tr>
+          <tr>
+            <td>Playtime Generated:</td>
+            <td>{{ playerData.profile.playtimeGen }}</td>
+          </tr>
+          <tr>
+            <td>Daily Builds Completed:</td>
+            <td>{{ playerData.profile.builds }}</td>
+          </tr>
+          <tr>
+            <td>Wins:</td>
+            <td>{{ playerData.profile.wins }}</td>
+          </tr>
+          <tr>
+            <td>Fails:</td>
+            <td>{{ playerData.profile.fails }}</td>
+          </tr>
+          <tr>
+            <td>Tower Trials Completed:</td>
+            <td>{{ playerData.profile.trials }}</td>
+          </tr>
+          <tr>
+            <td>Trophies:</td>
+            <td>{{ playerData.profile.trophies }}</td>
+          </tr>
+          <tr>
+            <td>Tipped:</td>
+            <td>{{ playerData.profile.tipped }}</td>
+          </tr>
+          <tr>
+            <td>Earned:</td>
+            <td>{{ playerData.profile.earned }}</td>
+          </tr>
         </table>
       </div>
 
@@ -151,9 +199,9 @@ export default {
     this.updateData();
   },
   watch: {
-    '$route.params.id': function (id) {
+    "$route.params.id": function(id) {
       this.playerData.alias.id = this.$route.params.id;
-      this.updateData()
+      this.updateData();
     }
   }
 };

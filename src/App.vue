@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/player/3719xx">Spekio</router-link> |
-      <input type="text" v-model="id"><br>
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>|
+      <router-link to="/player/3719xx">Spekio</router-link>|
+      <input type="text" v-model="id" />
       <button @click="playerSearch">Submit</button>
     </nav>
     <router-view />
@@ -16,14 +16,14 @@ export default {
   data() {
     return {
       id: ""
-    }
+    };
   },
   methods: {
     playerSearch() {
-      this.$router.push({ name: "Player", params: { id: this.id}});
+      this.$router.push({ name: "Player", params: { id: this.id } });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
