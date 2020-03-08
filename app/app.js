@@ -7,8 +7,6 @@ import * as utils from './utils.js';
 // 3: formatTime()
 // 4: formatDate()
 
-// TODO: Update the html file to recent changes in the data
-
 const token = '3SAPr11y13BiM7xk';
 const limit = 10;
 // @ts-ignore
