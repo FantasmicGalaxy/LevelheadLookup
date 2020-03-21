@@ -90,31 +90,14 @@ import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 
 import RumpusCE from "../scripts/rumpus-ce-develop/index";
-import { Alias } from "../scripts/rumpus-ce-develop/types/aliases";
-import { LevelheadPlayer } from "../scripts/rumpus-ce-develop/types/players";
+
+import { format } from "../scripts/utils/formatting";
+import { PlayerData } from "../types/player";
 import { LevelheadLevel } from "../scripts/rumpus-ce-develop/types/levels";
+import { LevelheadLevelKeyed } from "../types/level";
 
 const token = "3SAPr11y13BiM7xk";
 const rce = new RumpusCE(token);
-
-// enum format {
-//   none = 0,
-//   comma = 1,
-//   percent = 2,
-//   time = 3,
-//   date = 4
-// }
-
-interface LevelheadLevelKeyed {
-  level: LevelheadLevel;
-  key: number;
-}
-
-interface PlayerData {
-  alias: Alias;
-  profile: LevelheadPlayer;
-  levels: LevelheadLevelKeyed[];
-}
 
 @Component
 export default class PlayerView extends Vue {
@@ -182,7 +165,7 @@ export default class PlayerView extends Vue {
     if (this.playerData.alias.userId.length >= 6) {
       this.getUserAlias(this.playerData.alias.userId);
       this.getUserProfile(this.playerData.alias.userId);
-      this.getUserLevels(this.playerData.alias.userId);
+      this.getUserLevels(this.playerData.alias.userId, 64);
     }
   }
 
@@ -205,80 +188,32 @@ export default class PlayerView extends Vue {
     this.playerData.profile = profileData[0];
   }
 
-  async getUserLevels(userId: string) {
-    // let levels = [];
-    // let levelData = await rce.levelhead.levels.search(
-    //   { userIds: userId, limit: limit, sort: "createdAt" },
-    //   { doNotUseKey: true }
-    // );
-    // levels = [...levelData];
-    // while (levelData.length === limit) {
-    //   levelData = await levelData.nextPage();
-    //   levels.push(...levelData);
-    // }
+  async getUserLevels(userId: string, limit: number) {
+    const levels: LevelheadLevel[] = [];
 
-    // this.playerData.levels = levels;
-
-    const levelData = await rce.levelhead.levels.search(
-      { userIds: userId, limit: 10, sort: "createdAt" },
+    let levelData = await rce.levelhead.levels.search(
+      { userIds: userId, limit: limit, sort: "createdAt" },
       { doNotUseKey: true }
     );
+    levels.push(...levelData);
 
-    const levels: LevelheadLevelKeyed[] = [];
-
-    for (let i = 0; i < levelData.length; i++) {
-      const element = levelData[i];
-      levels.push({ level: element, key: i });
+    while (levelData.length === limit) {
+      levelData = await levelData.nextPage();
+      levels.push(...levelData);
     }
-    this.playerData.levels = levels;
-  }
 
-  formatCommas(number: string) {
-    number = number ? number : "0";
-    const parts = number.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-  }
+    const keyedLevels: LevelheadLevelKeyed[] = [];
 
-  formatPercent(percent: string) {
-    return `${percent}%`;
-  }
-
-  formatTime(seconds: string) {
-    seconds = seconds ? seconds : "0";
-    const number = parseFloat(seconds);
-    const minutes = Math.floor(number / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-      return `${days}d ${hours % 24}h`;
-    } else if (hours > 0) {
-      return `${hours}h ${minutes % 60}m`;
-    } else if (minutes > 0) {
-      return `${minutes}m`;
+    for (let i = 0; i < levels.length; i++) {
+      const level = levels[i];
+      level.title = level.title.replace("Balloog", "Hardlight");
+      keyedLevels.push({ level: level, key: i });
     }
+    this.playerData.levels = keyedLevels;
   }
 
-  formatDate(unixTime: string) {
-    unixTime = unixTime ? unixTime : "0";
-    const date = new Date(unixTime);
-    return `${date.getMonth() + 1}/${date.getDay() + 1}/${date.getFullYear()}`;
-  }
-
-  format(data: string, format: number) {
-    switch (format) {
-      case 1:
-        return this.formatCommas(data);
-      case 2:
-        return this.formatPercent(data);
-      case 3:
-        return this.formatTime(data);
-      case 4:
-        return this.formatDate(data);
-      default:
-        return data;
-    }
+  format(data: string, formatCode: number) {
+    format(data, formatCode);
   }
 }
 </script>
