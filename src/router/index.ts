@@ -24,6 +24,12 @@ const routes = [
     name: "Player",
     component: () =>
       import(/* webpackChunkName: "player" */ "../views/Player.vue")
+  },
+  {
+    path: "/level/:id",
+    name: "Level",
+    component: () =>
+      import(/* webpackChunkName: "level" */ "../views/Level.vue")
   }
 ];
 

@@ -213,7 +213,7 @@ export default class PlayerView extends Vue {
   }
 
   format(data: string, formatCode: number) {
-    format(data, formatCode);
+    return format(data, formatCode);
   }
 }
 </script>

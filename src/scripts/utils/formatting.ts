@@ -1,18 +1,22 @@
-export const none = 0;
-export const comma = 1;
-export const percent = 2;
-export const time = 3;
-export const date = 4;
+import { round } from "./math";
+
+enum formats {
+  none = 0,
+  comma = 1,
+  percent = 2,
+  time = 3,
+  date = 4
+}
 
 export function formatCommas(number: string) {
   number = number ? number : "0";
   const parts = number.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return parts.join(".");
+  return round(parts.join("."), 2);
 }
 
 export function formatPercent(percent: string) {
-  return `${percent}%`;
+  return `${round(percent, 2)}%`;
 }
 
 export function formatTime(seconds: string) {
@@ -39,13 +43,13 @@ export function formatDate(unixTime: string) {
 
 export function format(data: string, formatCode: number) {
   switch (formatCode) {
-    case comma:
+    case formats.comma:
       return formatCommas(data);
-    case percent:
+    case formats.percent:
       return formatPercent(data);
-    case time:
+    case formats.time:
       return formatTime(data);
-    case date:
+    case formats.date:
       return formatDate(data);
     default:
       return data;
