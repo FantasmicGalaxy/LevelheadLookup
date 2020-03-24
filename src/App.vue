@@ -4,26 +4,33 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/player/3719xx">Spekio</router-link>|
-      <input type="text" v-model="id" />
-      <button @click="playerSearch">Submit</button>
+      <input type="text" v-model="id" @keyup.enter="search" />
+      <button @click="search">Submit</button>
     </nav>
     <router-view />
   </div>
 </template>
 
-<script lang="js">
-export default {
-  data() {
-    return {
-      id: ""
-    };
-  },
-  methods: {
-    playerSearch() {
+<script lang="ts">
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+
+@Component
+export default class App extends Vue {
+  id = "";
+
+  search() {
+    if (this.$route.params.id === this.id) return;
+
+    this.id = this.id.replace(/\s/g, "");
+
+    if (this.id.length === 7) {
+      this.$router.push({ name: "Level", params: { id: this.id } });
+    } else {
       this.$router.push({ name: "Player", params: { id: this.id } });
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

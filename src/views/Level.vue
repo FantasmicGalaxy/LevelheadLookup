@@ -3,20 +3,13 @@
     <main style="display: flex;">
       <div>
         <img :src="levelData.avatarUrl()" alt="Avatar" />
-        <h1>{{ levelData.title }}@{{ levelData.levelId }}</h1>
-        <h2>By {{ levelData.alias.alias }}@{{ levelData.alias.userId }}</h2>
-        <!-- Attempts: number;
-    Favorites: number;
-    Likes: number;
-    PlayTime: number;
-    Players: number;
-    ReplayValue: number;
-    ClearRate: number;
-    Diamonds: number;
-    Successes: number;
-    TimePerWin: number;
-    ExposureBucks: number;
-        FailureRate: number;-->
+        <h1>{{ levelData.title }} @{{ levelData.levelId }}</h1>
+        <h2>
+          By {{ levelData.alias.alias }}
+          <router-link :to="`/player/${levelData.alias.userId}`">
+            @{{ levelData.alias.userId }}
+          </router-link>
+        </h2>
         <table>
           <tr>
             <td>Attempts:</td>
@@ -112,7 +105,6 @@ export default class PlayerView extends Vue {
     );
 
     this.levelData = levelData[0];
-    console.log(this.levelData);
   }
 
   format(data: string, formatCode: number) {

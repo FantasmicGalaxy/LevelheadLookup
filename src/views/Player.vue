@@ -3,7 +3,7 @@
     <main style="display: flex;">
       <div>
         <img :src="playerData.alias.avatarUrl()" alt="Avatar" />
-        <h1>{{ playerData.alias.alias }}@{{ playerData.alias.userId }}</h1>
+        <h1>{{ playerData.alias.alias }} @{{ playerData.alias.userId }}</h1>
         <table>
           <tr>
             <td>Followers:</td>
@@ -76,7 +76,11 @@
         <table>
           <tr v-for="keyedLevel in playerData.levels" :key="keyedLevel.key">
             <td>{{ keyedLevel.level.title }}</td>
-            <td>{{ keyedLevel.level.levelId }}</td>
+            <td>
+              <router-link :to="`/level/${keyedLevel.level.levelId}`">
+                @{{ keyedLevel.level.levelId }}
+              </router-link>
+            </td>
             <td>{{ format(keyedLevel.level.createdAt, 4) }}</td>
           </tr>
         </table>
